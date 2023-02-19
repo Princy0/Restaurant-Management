@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scale=no">
+    <title>PPReview A3</title>
+    <script src="js/lib/jquery-2.1.4.js"></script>
+    <script src="js/lib/jquery.mobile-1.4.5.js"></script>
+    <script src="js/lib/jquery.validate.js"></script>
+    <link rel="stylesheet" href="css/PPmystyle.css">
+    <link rel="stylesheet" href="css/lib/jquery.mobile-1.4.5.css">
+    <script src="js/PPdatabase.js"></script>
+    <script src="js/PPDAL.js"></script>
+    <script src="js/PPfacade.js"></script>
+    <script src="js/PPutil.js"></script>
+    <script src ="js/PPglobal.js"></script>
+    <script src="js/reviewclass.js"></script>
+</head>
+<body>
+<!--Make a pageHome div to edit and add actions in Home Page-->
+    <div id="pageHome" data-role="page">
+       <header data-role="header" data-position="fixed" data-theme="a">
+          <h1>Home Page</h1>
+           <div data-role="navbar" data-iconpos="top">
+               <ul>
+                   <li>
+                       <!--Add class to make attractive home page-->
+                       <a href="#pageHome" data-icon="home" class="ui-btn-active ui-state-persist">Home</a>
+                   </li>
+                   <!--Add different page connections to Home Page-->
+                   <li><a href="#PPAddReviewPage" data-icon="plus">Add</a></li>
+                   <li><a href="#ppViewReviewPage" data-icon="gear">List of Reviews</a></li>
+                   <li><a href="#ppSettingsPage" data-icon="star">Settings</a></li>
+               </ul>
+           </div>
+       </header>
+        <section data-role="content">
+            <h1 class="head">Restaurant Management</h1>
+            <p>Welcome to the Restaurant Management Project App. A prototype designed and coded using HTML, CSS, JavaScript and jQuery, SQL.
+                This is the Restaurant Management Web, where you can keep track of different places you visited along with your reviews.</p>
+            <!--Added image of restaurant theme-->
+            <img src="img/pp-image.png" width="250", height="250" class="photo">
+            <p>Please Feel free to contact me if you have any suggestions!!</p>
+
+            <a href="https://github.com/Princy0" data-role="button" data-icon="plus">Github</a>
+            <a href="#" data-role="button" data-icon="plus">Email : Princepn029@gmail.com</a>
+            <a href="https://www.anonymous.education/" data-role="button" data-icon="plus">Web : https://www.anonymous.education/</a>
+        </section>
+        <footer data-role="footer" data-position="fixed" data-theme="a">
+            <h1>Develop with {L0VE} by Prince Prajapati</h1>
+        </footer>
+    </div>
+<!--Working upon AddReviewPage-->
+    <div id="PPAddReviewPage" data-role="page">
+        <header data-role="header" data-position="fixed" data-theme="a">
+            <h1>Add a Review</h1>
+            <div data-role="navbar" data-iconpos="top">
+                <ul>
+                    <li>
+                        <a href="#pageHome" data-icon="home">Home</a>
+                    </li>
+                    <!--Add active class on Add Review Page-->
+                    <li><a href="#PPAddReviewPage" data-icon="plus"
+                           class="ui-btn-active ui-state-persist">Add</a></li>
+                    <li><a href="#ppViewReviewPage" data-icon="gear">List of Reviews</a></li>
+                    <li><a href="#ppSettingsPage" data-icon="star">Settings</a></li>
+                </ul>
+            </div>
+        </header>
+        <!--Add content form to AddReviewPage-->
+        <div data-role="content">
+            <form id="frmAdd" name="frmAdd" method="post">
+                <label for ="rName">Restaurant Name:</label>
+                <input type="text" id="rName" name="rName"/>
+                <label for ="bId">Business Id:</label>
+                <input type="text" id="bId" name="bId"/>
+                <label for ="selProvince">
+                    <p>Choose State:</p></label>
+                <select name="selProvince" id="selProvince" data-native-menu="false">
+                    <option value="ON">Ontario</option>
+                    <option value="BC">British Columbia</option>
+                    <option value ="AB" >Alberta</option>
+                    <option value="SK">Sasketchwan</option>
+                    <option value="QC">Quebec</option>
+                </select>
+                <label for ="rEmail">Reviewer Email:</label>
+                <input type="text" id="rEmail" name="rEmail"/>
+                <label for ="rCmt">Reviewer Comments:</label>
+                <textarea id="rCmt" name="rCmt"></textarea>
+<!--ratings check checkbox-->
+                <label for="ratingsCheck">
+                   <input type="checkbox" id="ratingsCheck" name="ratingsCheck" onclick="showHide(this)"/>
+                    Do you want to add your ratings?
+                </label>
+<!--div for checkbox-->
+                <div data-role="ratings" id="divAddRatings" style="display: none">
+                    <label for="rQuan">Food Quantity(0-5):</label>
+                    <input type="number" min="0" max="5" value="0" id="rQuan" name="rQuan" data-clear-btn="true">
+                    <label for="rSer">Service(0-5):</label>
+                    <input type="number" min="0" max="5" value="0" id="rSer" name="rSer"  data-clear-btn="true"/>
+                    <label for="rVal">Value(0-5):</label>
+                    <input type="number" min="0" max="5" value="0" id="rVal" name="rVal" data-clear-btn="true"/>
+                    <label for="Orat">Overall Ratings(1-100):</label>
+                    <input type="range" id="Orat" name="Orat" min="0" max="100" value="20" data-highlight="true"/>
+                </div>
+                <button type="button" data-role="button" id="btnSave" name="btnSave" data-theme="b" class="ui-btn-active" >Save</button>
+            </form>
+        </div>
+        <footer data-role="footer" data-position="fixed" data-theme="a">
+            <h1>Develop with {L0VE} by Prince Prajapati</h1>
+        </footer>
+    </div>
+<!--Make ViewReviewPage, which review and edit the Information-->
+        <div id="ppViewReviewPage" data-role="page">
+            <header data-role="header" data-position="fixed" data-theme="a">
+                <h1>List of Reviews</h1>
+                <div data-role="navbar" data-iconpos="top">
+                    <ul>
+                        <li>
+                            <a href="#pageHome" data-icon="home">Home</a>
+                        </li>
+                        <li><a href="#PPAddReviewPage" data-icon="plus">Add</a></li>
+                        <li><a href="#ppViewReviewPage" data-icon="gear"
+                               class="ui-btn-active ui-state-persist">List of Reviews</a></li>
+                        <li><a href="#ppSettingsPage" data-icon="star">Settings</a></li>
+                    </ul>
+                </div>
+            </header>
+            <section data-role="content">
+                <ul data-role="listview" id="lvAll" class="ui-listview-inset" data-split-icon="gear">
+                    <li>
+                        <h3>No Record found in reviews!!</h3>
+                    </li>
+                </ul>
+            </section>
+            <footer data-role="footer" data-theme="a" data-position="fixed">
+                <h1>Develop with {L0VE} by Prince Prajapati</h1>
+            </footer>
+        </div>
+        <div id="ppModifyReviewPage" data-role="page">
+            <header data-role="header" data-position="fixed" data-theme="a">
+                <h1>Modify Reviews</h1>
+                <div data-role="navbar" data-iconpos="top">
+                    <ul>
+                        <li>
+                            <a href="#pageHome" data-icon="home">Home</a>
+                        </li>
+                        <li><a href="#PPAddReviewPage" data-icon="plus">Add</a></li>
+                        <li><a href="#ppModifyReviewPage" data-icon="gear" class="ui-btn-active ui-state-persist">List of Reviews</a></li>
+                        <li><a href="#ppSettingsPage" data-icon="star">Settings</a></li>
+                    </ul>
+                </div>
+            </header>
+            <section data-role ="content">
+                <form name="frmEdit" id="frmEdit" method="post">
+                    <label for ="rEditName">Restaurant Name:</label>
+                    <input type="text" id="rEditName" name="rEditName" value="Maganlal Bhakhrisaak wala"/>
+                    <label for ="bEditId">Business Id:</label>
+                    <input type="text" id="bEditId" name="bEditId" value="A0005"/>
+                    <label for ="Province">
+                        <p>Choose State:</p></label>
+                    <select name="Province" id="Province" data-native-menu="false">
+                        <option value="ON">Ontario</option>
+                        <option value="BC">British Columbia</option>
+                        <option value ="AB">Alberta</option>
+                        <option value="SK">Sasketchwan</option>
+                        <option value="QC">Quebec</option>
+                    </select>
+                    <label for ="rEditEmail">Reviewer Email:</label>
+                    <input type="text" id="rEditEmail" name="rEditEmail" value="Pprajapati5969@conestogac.on.ca">
+                    <label for ="rEditCmt">Reviewer Comments:</label>
+                    <textarea id="rEditCmt" name="rEditCmt" value="Amazing Gujarati Food, Spicy!!"></textarea>
+
+                    <input type="checkbox" id="mRatingsChk" name="mRatingsChk" onclick="modifyHideShow(this)">
+                    <label for="mRatingsChk">Do you want to add your ratings?</label> <br>
+
+                    <div id="modifyRating" name="modifyRating" style="display:none">
+                        <label for="mQuan">Food Quantity(0-5):</label>
+                        <input type="number" min="0" max="5" value="0" id="mQuan" name="mQuan" data-clear-btn="true"/>
+                        <label for="mSer">Service(0-5):</label>
+                        <input type="number" min="0" max="5" value="0" id="mSer" name="mSer" data-clear-btn="true"/>
+                        <label for="rVal">Value(0-5):</label>
+                        <input type="number" min="0" max="5" value="0" id="mVal" name="mVal" data-clear-btn="true"/>
+                        <label for="Mrat">Overall Ratings(1-100):</label>
+                        <input type="range" id="Mrat" name="Mrat" min="0" max="100" value="20" data-highlight="true"/>
+                    </div>
+                    <button type="button" data-role="button" id="btnCancel" name="btnCancel" data-inline="true" data-theme="b">Cancel</button>
+                    <button type="button" data-role="button" id="btnUpdate" name="btnUpdate" data-inline="true" >Update</button>
+                    <button type="button" data-role="button" id="btnDelete" name="btnDelete" data-inline="true">Delete</button>
+                </form>
+            </section>
+            <footer data-role="footer" data-position="fixed" data-theme="a">
+                <h1>Develop with {L0VE} by Prince Prajapati</h1>
+            </footer>
+        </div>
+<!--Settings page set up-->
+        <div id="ppSettingsPage" data-role="page">
+            <header data-role="header" data-position="fixed" data-theme="a">
+                <h1>Settings</h1>
+                <div data-role="navbar" data-iconpos="top">
+                    <ul>
+                        <li>
+                            <a href="#pageHome" data-icon="home"
+                            >Home</a>
+                        </li>
+                        <li><a href="#PPAddReviewPage" data-icon="plus">Add</a></li>
+                        <li><a href="#ppViewReviewPage" data-icon="gear">List of Reviews</a></li>
+                        <!--Add activate class to activate the page-->
+                        <li><a href="#ppSettingsPage" data-icon="star" class="ui-btn-active ui-state-persist">Settings</a></li>
+                    </ul>
+                </div>
+            </header>
+            <!--Content of the Default review name...-->
+            <section data-role="content">
+                <label for ="drEmail">Default Reviewer Email:</label>
+                <input type="text" id="drEmail" name="drEmail"/>
+                <button type="button" data-role="button" id="btnSave2" name="btnSave2" data-theme="b" class="ui-btn-active">Save</button>
+                <button type="button" data-role="button" id="btnClearDatabase" name="btnClearDatabase"  class="ui-btn-active">Clear Database</button>
+            </section>
+            <!--Footer of page-->
+            <footer data-role="footer" data-position="fixed" data-theme="a">
+                <h1>Develop with {L0VE} by Prince Prajapati</h1>
+            </footer>
+        </div>
+</body>
+</html>
