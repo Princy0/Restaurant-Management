@@ -30,9 +30,10 @@ To access the website, simply navigate to the root URL of your web server in you
 
 If you encounter any issues or have any questions, please contact the developer at Princepn029@gmail.com.
 
-## Contributing
-
-
+## Contact
+- You can contact me for contributing more prjects : 
+- Email : Princepn029@gmail.com
+- Linkedin : https://www.linkedin.com/in/princeprajapati/
 
 ## License
 
