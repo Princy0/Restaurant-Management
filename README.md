@@ -34,7 +34,5 @@ If you encounter any issues or have any questions, please contact the developer 
 - You can contact me for contributing more prjects : 
 - Email : Princepn029@gmail.com
 - Linkedin : https://www.linkedin.com/in/princeprajapati/
-
 ## License
-
-This project is licensed under the MIT License. See the `LICENSE` file for more information.
+under the MIT License. See the `LICENSE` file for more information.
